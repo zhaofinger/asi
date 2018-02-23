@@ -2,6 +2,7 @@ import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
+import { ENV } from '../config';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -65,7 +66,7 @@ export default function request(url, options) {
     }
   }
 
-  return fetch(url, newOptions)
+  return fetch(ENV.API + url, newOptions)
     .then(checkStatus)
     .then((response) => {
       if (newOptions.method === 'DELETE' || response.status === 204) {
