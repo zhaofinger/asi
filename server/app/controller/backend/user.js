@@ -20,7 +20,6 @@ class UserController extends Controller {
       if (bcrypt.compareSync(userModel.password, result.password)) {
         delete result.password;
         const jwt = this.app.jwt.sign(JSON.parse(JSON.stringify(result)), this.app.config.jwt.secret);
-        console.log(this.ctx.cookies.get('jwt_token'));
         this.ctx.body = {
           status: 200,
           data: result

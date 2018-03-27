@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Router, Route, Switch } from 'react-router-dom';
-import history from './public/lib/history';
-
 import { Provider } from 'react-redux';
 import store from './store/store';
 
 import registerServiceWorker from './registerServiceWorker';
 
-import Login from './page/Login/Login';
-import Index from './page/Index/Index';
+import history from './public/lib/history';
+import Route from './router/';
 
 import './public/style/base.scss';
 
@@ -31,13 +28,7 @@ checkLogin();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/login" component={Login} />
-        <Route path="/index" component={Index} />
-      </Switch>
-    </Router>
+    <Route />
   </Provider>, document.getElementById('root'));
 
 registerServiceWorker();
