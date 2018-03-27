@@ -4,16 +4,14 @@
   "description": "A project for ASMR.",
   "private": true,
   "dependencies": {
-    "bcrypt": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "egg": "^2.2.1",
     "egg-cors": "^2.0.0",
+    "egg-jwt": "^3.0.0",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.5.0",
     "egg-security": "^2.0.0",
-    "egg-validate": "^1.0.0",
-    "jsonwebtoken": "^8.1.1",
-    "passport": "^0.4.0"
+    "egg-validate": "^1.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

@@ -22,7 +22,7 @@ exports.mysql = {
 
 // 跨域
 exports.security = {
-  domainWhiteList: ['127.0.0.1:8000'],
+  domainWhiteList: ['localhost:3000'],
   csrf: false,
 };
 

@@ -19,3 +19,15 @@ exports.cors = {
   enable: true,
   package: 'egg-cors',
 };
+
+// jwt
+exports.jwt = {
+  enable: true,
+  package: "egg-jwt"
+};
+
+// // passport
+// exports.passport = {
+//   enable: true,
+//   package: 'egg-passport',
+// };
