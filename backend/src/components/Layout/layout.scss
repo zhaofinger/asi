@@ -1,0 +1,25 @@
+#layout {
+  min-height: 100%;
+  #logo {
+    height: 32px;
+    line-height: 32px;
+    margin: 16px;
+    text-align: center;
+    color: #ffffff;
+    background: rgba(255,255,255,.2);
+  }
+  #header {
+    background: #ffffff;
+  }
+  #content {
+    margin: 0 16px;
+    .content-nav {
+      margin: 16px 0;
+    }
+    .content-content {
+      padding: 24px;
+      height: 100%;
+      background: #ffffff;
+    }
+  }
+}
