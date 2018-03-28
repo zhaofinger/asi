@@ -16,6 +16,7 @@ class Login extends Component {
   }
 
   async componentWillMount() {
+    if (!this.props.userData.username) return;
     // 校验是否登录
     let result = await isLogin();
     if (result) {
@@ -78,6 +79,7 @@ class Login extends Component {
 const WrappedLogin = Form.create()(Login);
 
 export default connect(state => ({
+  userData: state.userData,
 }), {
   setUserData,
 })(WrappedLogin);

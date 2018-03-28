@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import history from '../../public/lib/history';
+import { logout } from '../../api/user';
+import { removeUserData } from '../../store/user/action';
 
 import './layout.scss';
 
@@ -14,6 +18,7 @@ class PageLayout extends React.Component {
     sideMenu: [
       { name: '概览', route: '/index', icon: 'pie-chart' },
       { name: '用户管理', route: '/user', icon: 'user' },
+      { name: '耳朵', route: '/audio', icon: 'hdd' },
       {
         name: '二级菜单父', icon: 'bars', children: [
           { name: 'chrome', route: '/s1', icon: 'chrome' },
@@ -24,10 +29,13 @@ class PageLayout extends React.Component {
     nowRoute: '/index',
   };
 
+  static propTypes = {
+    removeUserData: PropTypes.func.isRequired
+  }
+
   componentWillMount() {
     history.listen((location, action) => {
       let path = location.pathname === '/' ? '/index' : location.pathname;
-      console.log(path);
       this.setState({
         nowRoute: path
       });
@@ -69,6 +77,12 @@ class PageLayout extends React.Component {
     }
   }
 
+  async quitLogin() {
+    await logout();
+    this.props.removeUserData();
+    history.push('/login');
+  }
+
   render() {
     const { children } = this.props;
     return (
@@ -83,12 +97,14 @@ class PageLayout extends React.Component {
         </Sider>
 
         <Layout>
-          <Header id="header" />
+          <Header id="header">
+            <a className="quit-login" onClick={this.quitLogin.bind(this)}>退出登录</a>
+          </Header>
           <Content id="content">
             <Breadcrumb className="content-nav">
               {
                 this.state.nowRoute.split('/').map(item => (
-                  <Breadcrumb.Item>{item}</Breadcrumb.Item>
+                  <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
                 ))
               }
             </Breadcrumb>
@@ -105,4 +121,7 @@ class PageLayout extends React.Component {
   }
 }
 
-export default PageLayout;
+export default connect(state => ({
+}), {
+  removeUserData,
+})(PageLayout);

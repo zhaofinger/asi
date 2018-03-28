@@ -1,5 +1,11 @@
 #layout {
   min-height: 100%;
+  #header {
+    display: flex;
+    .quit-login {
+      margin-left: auto;
+    }
+  }
   #logo {
     height: 32px;
     line-height: 32px;

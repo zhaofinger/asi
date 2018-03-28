@@ -41,11 +41,23 @@ class UserController extends Controller {
         status: 200,
         data: this.app.jwt.verify(jwtToken, this.app.config.jwt.secret)
       };
+    } else {
+      this.ctx.body = {
+        status: 598,
+        message: '登录失效，请先登录！'
+      }
     }
   }
 
-  async logout() {}
+  async logout() {
+    this.ctx.cookies.set('jwt_token', null);
+    this.ctx.body = {
+      status: 200,
+      data: {}
+    };
+  }
+
   async destory() {}
-};
+}
 
 module.exports = UserController;

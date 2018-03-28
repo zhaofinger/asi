@@ -10,3 +10,14 @@ export const setUserData = value => {
     value,
   }
 }
+
+/**
+ * 退出登录
+ * @param {*} value
+ */
+export const removeUserData = value => {
+  return {
+    type: user.REMOVE_USER_DATA,
+    value,
+  }
+}
