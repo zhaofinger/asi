@@ -21,8 +21,8 @@ class Login extends Component {
     if (result) {
       this.props.setUserData(result);
       if (this.props.history.length > 2) {
-        this.props.history.goBack();
-      } else {
+      //   this.props.history.goBack();
+      // } else {
         this.props.history.push('/index');
       }
     }
