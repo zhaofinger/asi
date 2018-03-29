@@ -1,8 +1,50 @@
-body {
-  font-family: Helvetica Neue, PingFang SC, Helvetica, Arial, Hiragino Sans GB, Microsoft Yahei, \\5FAE\8F6F\96C5\9ED1, STHeiti, \\534E\6587\7EC6\9ED1, sans-serif;
-  color: #666666;
+html {
+  height: 100%;
 }
 
-#root, #app {
+body,
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: 'PingFang SC', 'Menlo', 'Meslo LG', 'monospace', 'Helvetica', 'Tahoma', 'Arial', 'Microsoft JhengHei', 'Microsoft YaHei', 'SimSun', 'sans-serif';
+  font-weight: 300;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  margin: 0 0;
+  font-weight: 300;
+  color: #333333;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+#root,
+#app {
   height: 100%;
 }
