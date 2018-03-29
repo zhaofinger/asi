@@ -18,7 +18,10 @@ class PageLayout extends React.Component {
     sideMenu: [
       { name: '概览', route: '/index', icon: 'pie-chart' },
       { name: '用户管理', route: '/user', icon: 'user' },
-      { name: '耳朵', route: '/audio', icon: 'hdd' },
+      { name: 'ASMR', icon: 'hdd', children: [
+        { name: '列表', route: '/audio/index', icon: 'bars' },
+        { name: '新建', route: '/audio/create', icon: 'upload' }
+      ] },
       {
         name: '二级菜单父', icon: 'bars', children: [
           { name: 'chrome', route: '/s1', icon: 'chrome' },
@@ -34,6 +37,11 @@ class PageLayout extends React.Component {
   }
 
   componentWillMount() {
+    // 当前路由
+    this.setState({
+      nowRoute: window.location.pathname === '/' ? '/index' : window.location.pathname
+    });
+    // 监听路由变化
     history.listen((location, action) => {
       let path = location.pathname === '/' ? '/index' : location.pathname;
       this.setState({

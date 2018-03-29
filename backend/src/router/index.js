@@ -6,6 +6,9 @@ import Layout from '../components/Layout/Layout';
 
 import Login from '../page/Login/Login';
 import Index from '../page/Index/Index';
+import User from '../page/User/User';
+import Audio from '../page/Audio/Audio';
+import AudioCreate from '../page/Audio/AudioCreate';
 
 // const RouteWithLayout = ({ layout, component, ...rest }) => {
 //   return (
@@ -27,6 +30,9 @@ export default class RouteConfig extends Component {
             <Switch>
               <Route exact path="/" component={Index} />
               <Route path="/index" component={Index} />
+              <Route path="/user" component={User} />
+              <Route path="/audio/index" component={Audio} />
+              <Route path="/audio/create" component={AudioCreate} />
               <Redirect to="/" />
             </Switch>
           </Layout>

@@ -21,7 +21,9 @@ const checkLogin = async () => {
       type: 'SET_USER_DATA',
       value: result
     });
-    history.push('/index');
+    if (window.location.pathname.includes('login')) {
+      history.push('/index');
+    }
   }
 };
 checkLogin();
