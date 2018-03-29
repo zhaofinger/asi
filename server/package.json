@@ -11,7 +11,8 @@
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.5.0",
     "egg-security": "^2.0.0",
-    "egg-validate": "^1.0.0"
+    "egg-validate": "^1.0.0",
+    "qiniu": "^7.1.3"
   },
   "devDependencies": {
     "autod": "^3.0.1",
