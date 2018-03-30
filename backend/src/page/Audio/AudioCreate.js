@@ -6,6 +6,7 @@ import uploadFile from '../../public/lib/file-upload';
 import './audio-create.scss';
 import { FILE_TYPE } from '../../public/lib/constants';
 import { IMG_PREFIX, AUDIO_PREFIX } from '../../config';
+import { createAudio } from '../../api/audio';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -28,9 +29,17 @@ class AudioCreate extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.audioLoading || this.state.posterLoading) {
+      message.error('请等待封面以及文件上传完成！');
+      return;
+    }
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log(values);
+        const result = await createAudio(values);
+        if (result.id) {
+          message.success('创建成功！');
+          this.props.history.push('/audio/index');
+        }
       }
     });
   }
@@ -67,21 +76,24 @@ class AudioCreate extends Component {
 
       observable.subscribe({
         next(res) {
+          data.onProgress(res.total.percent);
           _this.setState({
             audioUploadPercent: Math.floor(res.total.percent)
           });
         },
         complete(res) {
+          data.onSuccess(res);
           res.fullUrl = AUDIO_PREFIX + res.key;
           _this.setState({
             audioLoading: false,
             previewAudioSrc: res.fullUrl,
           });
           _this.props.form.setFieldsValue({
-            audio: res.key,
+            src: res.key,
           });
         },
         error(err) {
+          data.onError(err);
           console.error(err);
         }
       });
@@ -105,8 +117,10 @@ class AudioCreate extends Component {
 
       observable.subscribe({
         next(res) {
+          data.onProgress(res.total.percent);
         },
         complete(res) {
+          data.onSuccess(res);
           res.fullUrl = IMG_PREFIX + res.key;
           _this.setState({
             posterLoading: false,
@@ -117,6 +131,7 @@ class AudioCreate extends Component {
           });
         },
         error(err) {
+          data.onError(err);
           console.error(err);
         }
       });
@@ -135,8 +150,16 @@ class AudioCreate extends Component {
             )}
           </FormItem>
 
+          <FormItem {...formItemLayout} label="作者">
+            {getFieldDecorator('author', {
+              rules: [{ required: true, message: '请输入作者！', whitespace: true }],
+            })(
+              <Input placeholder="请输入作者名称"/>
+            )}
+          </FormItem>
+
           <FormItem {...formItemLayout} label="asmr音频文件">
-            {getFieldDecorator('audio', {
+            {getFieldDecorator('src', {
               rules: [{ required: true, message: '请上传音频！', whitespace: true }],
             })(
               <div className="clearfix">

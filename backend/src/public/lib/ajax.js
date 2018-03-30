@@ -24,7 +24,7 @@ export default function ajax(url, method = 'get', data= {}) {
   })
   .then(response => response.data)
   .then(response => {
-    if (response.status === 200) {
+    if (response.status >= 200 && response.status < 300) {
       return response.data;
     } else {
       message.error(response.message);

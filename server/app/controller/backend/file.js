@@ -6,7 +6,6 @@ const Controller = require('egg').Controller;
 class FileController extends Controller {
 
   async generateToken() {
-    console.log(this.ctx.request.query);
     let isImg = parseInt(this.ctx.request.query.is_img);
     const options = {
       scope: this.app.config.qiniu[isImg ? 'imgScope' : 'audioScope'],
