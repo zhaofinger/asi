@@ -16,7 +16,24 @@ class AudioController extends Controller {
     };
   }
 
-  async index() {}
+  async index() {
+    const { ctx } = this;
+
+    ctx.validate({
+      page: { type: 'string', format: /\d+/, required: false },
+      num: { type: 'string', format: /\d+/, required: false },
+    }, ctx.query);
+
+    const { page, num } = ctx.query;
+
+    const data = await ctx.service.backend.audio.list(page, num);
+
+    ctx.body = {
+      status: 200,
+      data
+    };
+
+  }
 
   async create() {
     const { ctx } = this;

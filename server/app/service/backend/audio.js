@@ -13,5 +13,15 @@ class UserController extends Controller {
     return false;
   }
 
+  async list(page, num = 10) {
+    num = Number(num);
+    const list = await this.app.mysql.select('audio', {
+      limit: num,
+      offset: (page - 1) * num,
+    });
+    const total = await this.app.mysql.count('audio');
+    return { list, total };
+  }
+
 }
 module.exports = UserController;

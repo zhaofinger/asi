@@ -1,0 +1,13 @@
+#audio {
+  .audio-list {
+    .ant-table {
+      font-size: 12px;
+      th, td {
+        max-width: 200px;
+        audio {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
