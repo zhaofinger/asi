@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS audio (
   poster VARCHAR(100) NOT NULL,             -- 封面
   `desc` VARCHAR(255) NOT NULL,             -- 简介
   origin VARCHAR(100),                      -- 来源
+	is_publish TINYINT(1) UNSIGNED NOT NULL default 0,  -- 是否发布
+	is_delete TINYINT(1) UNSIGNED NOT NULL default 0,   -- 是否删除
   created_at BIGINT UNSIGNED,               -- 创建时间
   updated_at BIGINT UNSIGNED,               -- 更新时间
   PRIMARY KEY (id)

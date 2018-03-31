@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Tooltip, Modal, message } from 'antd';
+import { Table, Tooltip, Modal, message, Button, Switch } from 'antd';
 
 import './audio.scss';
-import { getAudioList } from '../../api/audio';
+import { getAudioList, publishAudio } from '../../api/audio';
 import { fullImgUrl, timeFormat, fullAudioUrl } from '../../public/lib/utils';
 
 
@@ -13,7 +13,8 @@ class Audio extends Component {
     isShowPreviewModal: false,
     list: [],
     nowPage: 1,
-    totalCount: 0
+    totalCount: 0,
+    publishLoadingIndex: null
   }
 
   static propTypes = {
@@ -64,6 +65,20 @@ class Audio extends Component {
     this.getList(nowPage);
   }
 
+  async publishAudio(id, index, isPublish) {
+    this.setState({
+      publishLoadingIndex: index
+    });
+    await publishAudio(id, Number(!isPublish));
+    this.setState({
+      publishLoadingIndex: null
+    });
+    this.setState(preState => {
+      preState.list[index].is_publish = !preState.list[index].is_publish;
+      return { list: preState.list };
+    });
+  }
+
   render() {
     const columns = [{
       title: '标题',
@@ -77,20 +92,34 @@ class Audio extends Component {
       dataIndex: 'desc',
       render: desc => <Tooltip placement="top" title={desc}><span className="pointer">{desc.substr(0, 30)}</span></Tooltip>
     }, {
-      title: '文件',
+      title: '音频',
       dataIndex: 'src',
       render: src => <audio src={src} controls preload="none"></audio>
     }, {
       title: '来源',
       dataIndex: 'origin',
+      render: origin => <Tooltip placement="top" title={origin}><span className="pointer">{origin.substr(0, 10)}</span></Tooltip>
+    },  {
+      title: '发布',
+      dataIndex: 'is_publish',
+      render: (isPublish, record, index) => <Switch size="small" checked={Boolean(isPublish)} loading={ this.state.publishLoadingIndex === index } onChange={this.publishAudio.bind(this, record.id, index, isPublish)} />
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
-      render: time => timeFormat(time),
+      render: time => <Tooltip placement="top" title={timeFormat(time)}><span className="pointer">{timeFormat(time, 'yyyy-MM-dd')}</span></Tooltip>,
     }, {
-      title: '最后修改时间',
+      title: '修改时间',
       dataIndex: 'updated_at',
-      render: time => timeFormat(time),
+      render: time => <Tooltip placement="top" title={timeFormat(time)}><span className="pointer">{timeFormat(time, 'yyyy-MM-dd')}</span></Tooltip>,
+    }, {
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <div>
+          <Button type="primary" size="small">更新</Button>
+          <Button type="danger" size="small">删除</Button>
+        </div>
+      ),
     }];
     return (
       <div id="audio">

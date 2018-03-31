@@ -16,11 +16,17 @@ class UserController extends Controller {
   async list(page, num = 10) {
     num = Number(num);
     const list = await this.app.mysql.select('audio', {
+      where: { is_delete: 0 },
       limit: num,
       offset: (page - 1) * num,
     });
     const total = await this.app.mysql.count('audio');
     return { list, total };
+  }
+
+  async update(audioModel) {
+    const result = await this.app.mysql.update('audio', audioModel);
+    return result.affectedRows === 1;
   }
 
 }

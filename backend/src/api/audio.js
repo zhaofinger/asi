@@ -15,3 +15,12 @@ export const getAudioList = data => {
 export const createAudio = data => {
   return ajax('/audio', 'post', data);
 };
+
+/**
+ * 操作Audio的发布状态
+ * @param {string} id
+ * @param {number} is_publish
+ */
+export const publishAudio = (id, is_publish) => {
+  return ajax(`/audio/${id}`, 'put', { is_publish });
+};

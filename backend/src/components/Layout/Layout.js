@@ -111,7 +111,7 @@ class PageLayout extends React.Component {
           <Content id="content">
             <Breadcrumb className="content-nav">
               {
-                this.state.nowRoute.split('/').map(item => (
+                this.state.nowRoute.toUpperCase().split('/').map(item => (
                   <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
                 ))
               }
