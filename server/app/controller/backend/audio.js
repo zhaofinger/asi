@@ -49,6 +49,16 @@ class AudioController extends Controller {
     ctx.body = { data: { id: audioModel.id }, status: 200 };
   }
 
+  async destroy() {
+    const { ctx } = this;
+    let audioModel = {
+      id: Number(ctx.params.id),
+      is_delete: 1,
+      updated_at: Date.now()
+    };
+    const id = await ctx.service.backend.audio.update(audioModel);
+    ctx.body = { data: { id: audioModel.id }, status: 200 };
+  }
 }
 
 module.exports = AudioController;

@@ -41,3 +41,11 @@ export const updateAudio = (id, audioModel) => {
 export const publishAudio = (id, is_publish) => {
   return ajax(`/audio/${id}`, 'put', { is_publish });
 };
+
+/**
+ * 删除Audio
+ * @param {string} id
+ */
+export const deleteAudio = id => {
+  return ajax(`/audio/${id}`, 'delete');
+};

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Table, Tooltip, Modal, message, Button, Switch } from 'antd';
 
 import './audio.scss';
-import { getAudioList, publishAudio } from '../../api/audio';
+import { getAudioList, publishAudio, deleteAudio } from '../../api/audio';
 import { fullImgUrl, timeFormat, fullAudioUrl } from '../../public/lib/utils';
 
 
@@ -15,7 +15,8 @@ class Audio extends Component {
     list: [],
     nowPage: 1,
     totalCount: 0,
-    publishLoadingIndex: null
+    publishLoadingIndex: null,
+    deleteLoadingIndex: null
   }
 
   static propTypes = {
@@ -70,15 +71,35 @@ class Audio extends Component {
     this.setState({
       publishLoadingIndex: index
     });
-    await publishAudio(id, Number(!isPublish));
+    let result = await publishAudio(id, Number(!isPublish));
+    if (result.id) {
+      message.success('发布状态修改成功！');
+      this.setState({
+        publishLoadingIndex: null
+      });
+      this.setState(preState => {
+        preState.list[index].is_publish = !preState.list[index].is_publish;
+        preState.list[index].updated_at = Date.now();
+        return { list: preState.list };
+      });
+    }
+  }
+
+  async deleteAudio(id, index) {
     this.setState({
-      publishLoadingIndex: null
+      deleteLoadingIndex: index
     });
-    this.setState(preState => {
-      preState.list[index].is_publish = !preState.list[index].is_publish;
-      preState.list[index].updated_at = Date.now();
-      return { list: preState.list };
-    });
+    let result = await deleteAudio(id);
+    if (result.id) {
+      message.success('删除成功！');
+      this.setState({
+        deleteLoadingIndex: null
+      });
+      this.setState(preState => {
+        preState.list.splice(index, 1);
+        return { list: preState.list };
+      });
+    }
   }
 
   render() {
@@ -104,7 +125,7 @@ class Audio extends Component {
     },  {
       title: '发布',
       dataIndex: 'is_publish',
-      render: (isPublish, record, index) => <Switch size="small" checked={Boolean(isPublish)} loading={ this.state.publishLoadingIndex === index } onChange={this.publishAudio.bind(this, record.id, index, isPublish)} />
+      render: (isPublish, record, index) => <Switch size="small" checked={Boolean(isPublish)} loading={this.state.publishLoadingIndex === index} onChange={this.publishAudio.bind(this, record.id, index, isPublish)} />
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
@@ -116,13 +137,13 @@ class Audio extends Component {
     }, {
       title: '操作',
       key: 'action',
-      render: (text, record) => (
+      render: (text, record, index) => (
         <div>
           <Link to={`/audio/update/${record.id}`}>
             <Button type="primary" size="small">编辑</Button>
           </Link>
           &nbsp;&nbsp;
-          <Button type="danger" size="small">删除</Button>
+          <Button type="danger" size="small" loading={this.state.deleteLoadingIndex === index} onClick={this.deleteAudio.bind(this, record.id, index)}>删除</Button>
         </div>
       ),
     }];
