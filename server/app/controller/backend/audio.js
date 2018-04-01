@@ -34,10 +34,17 @@ class AudioController extends Controller {
     ctx.body = { data: { id }, status: 201 };
   }
 
+  async show() {
+    const { ctx } = this;
+    const audioModel = await ctx.service.backend.audio.show(Number(ctx.params.id));
+    ctx.body = { data: audioModel, status: 200 };
+  }
+
   async update() {
     const { ctx } = this;
     let audioModel = ctx.request.body;
     audioModel.id = Number(ctx.params.id);
+    audioModel.updated_at = Date.now();
     const id = await ctx.service.backend.audio.update(audioModel);
     ctx.body = { data: { id: audioModel.id }, status: 200 };
   }

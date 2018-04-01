@@ -9,6 +9,7 @@ import Index from '../page/Index/Index';
 import User from '../page/User/User';
 import Audio from '../page/Audio/Audio';
 import AudioCreate from '../page/Audio/AudioCreate';
+import AudioUpdate from '../page/Audio/AudioUpdate';
 
 // const RouteWithLayout = ({ layout, component, ...rest }) => {
 //   return (
@@ -33,6 +34,7 @@ export default class RouteConfig extends Component {
               <Route path="/user" component={User} />
               <Route path="/audio/index" component={Audio} />
               <Route path="/audio/create" component={AudioCreate} />
+              <Route path="/audio/update/:id" component={AudioUpdate} />
               <Redirect to="/" />
             </Switch>
           </Layout>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Table, Tooltip, Modal, message, Button, Switch } from 'antd';
 
 import './audio.scss';
@@ -75,6 +76,7 @@ class Audio extends Component {
     });
     this.setState(preState => {
       preState.list[index].is_publish = !preState.list[index].is_publish;
+      preState.list[index].updated_at = Date.now();
       return { list: preState.list };
     });
   }
@@ -116,7 +118,10 @@ class Audio extends Component {
       key: 'action',
       render: (text, record) => (
         <div>
-          <Button type="primary" size="small">更新</Button>
+          <Link to={`/audio/update/${record.id}`}>
+            <Button type="primary" size="small">编辑</Button>
+          </Link>
+          &nbsp;&nbsp;
           <Button type="danger" size="small">删除</Button>
         </div>
       ),

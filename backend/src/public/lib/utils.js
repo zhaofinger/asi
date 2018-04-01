@@ -5,10 +5,10 @@ import { IMG_PREFIX, AUDIO_PREFIX } from '../../config';
  * @param {string} url
  */
 export const fullImgUrl = url => {
-  if (!url) {
+  if (typeof url !== 'string') {
     return url;
   }
-  if (url.indexOf('http') !== -1) {
+  if (url.includes('http')) {
     return url;
   } else {
     return IMG_PREFIX + url;
@@ -23,7 +23,7 @@ export const fullAudioUrl = url => {
   if (!url) {
     return url;
   }
-  if (url.indexOf('http') !== -1) {
+  if (url.includes('http')) {
     return url;
   } else {
     return AUDIO_PREFIX + url;

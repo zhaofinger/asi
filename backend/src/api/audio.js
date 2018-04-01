@@ -17,6 +17,23 @@ export const createAudio = data => {
 };
 
 /**
+ * 获取Audio
+ * @param {string} id
+ */
+export const getAudio = id => {
+  return ajax(`/audio/${id}`, 'get');
+};
+
+/**
+ * 更新Audio
+ * @param {string} id
+ * @param {object} audioModel
+ */
+export const updateAudio = (id, audioModel) => {
+  return ajax(`/audio/${id}`, 'put', audioModel);
+};
+
+/**
  * 操作Audio的发布状态
  * @param {string} id
  * @param {number} is_publish

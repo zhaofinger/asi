@@ -30,8 +30,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    // To disabled submit button at the beginning.
-    this.props.form.validateFields();
   }
 
   handleSubmit = e => {

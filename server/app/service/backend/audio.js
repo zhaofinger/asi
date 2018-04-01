@@ -19,9 +19,15 @@ class UserController extends Controller {
       where: { is_delete: 0 },
       limit: num,
       offset: (page - 1) * num,
+      orders: [['created_at','desc'], ['id','desc']]
     });
     const total = await this.app.mysql.count('audio');
     return { list, total };
+  }
+
+  async show(id) {
+    const result = await this.app.mysql.get('audio', { id });
+    return result;
   }
 
   async update(audioModel) {
